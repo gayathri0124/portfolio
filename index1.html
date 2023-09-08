@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gayathri Kalthi Reddy - Portfolio</title>
+    <style>
+        hr {
+  border: none;
+  height: 1px;
+  color: #090808;  
+  background-color: #333;  
+}
+.about {
+    align-self: center;
+  width: 95%;
+  height: 250px;
+  padding: 15px;
+  background-color: rgb(169, 187, 241);
+  box-shadow: 2px 2px;
+}
+ span
+ {
+    border: black;
+    padding: 10px;
+    box-shadow: #333;
+    height: 10%;
+ }
+ header {
+            background-color: #f5f5f5;
+            border-bottom: 1px solid #000;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        nav button {
+            border: 1px solid #000;
+            color: navy;
+            background-color: lightblue;
+            font-size: larger;
+            padding: 5px 15px;
+            border-radius: 5px;
+        }
+
+
+
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+</head>
+<body>
+<div class="flex">
+    <div class="relative max-w-xs overflow-hidden bg-cover bg-no-repeat">
+       <p> <img
+          src="https://tecdn.b-cdn.net/img/new/standard/city/047.jpg"
+          class="max-w-xs transition duration-300 ease-in-out hover:scale-110 h-auto max-w-full inline pt-5 pl-5"
+          alt="" />
+      </div>
+    <h1 class="text-5xl font-normal leading-normal mt-0 mb-2 text-black-800 text-center">Gayathri Kalthi Reddy</h1>
+</p>
+</div>
+    <header>
+        
+        <nav class="sticky top-0">
+        <button onclick="scrollToSection('about')" style="border: black; color: navy; background-color: lightblue; font-size: larger;">About</button>
+    <button onclick="scrollToSection('education')" style="border: black; color: navy; background-color: lightblue; font-size: larger;">Education</button>
+    <button onclick="scrollToSection('experience')" style="border: black; color: navy; background-color: lightblue; font-size: larger;">Experience</button>
+    <button onclick="scrollToSection('research')" style="border: black; color: navy; background-color: lightblue; font-size: larger;">Research</button>
+    <button onclick="scrollToSection('projects')" style="border: black; color: navy; background-color: lightblue; font-size: larger;">Projects</button>
+</nav>
+
+</header>
+    <br><br>
+
+    <script>
+        function scrollToSection(sectionId) {
+            var section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    </script>
+
+    <section id="about"  >
+    <br><br>
+    <div>
+        <h2>About</h2>
+        <p></p>
+    </div>
+    </section>
+
+    <section id="education"  >
+    <br><br>
+    <div>
+        <h2>Education</h2>
+        <hr>
+        <h4>The George Washington University | Aug. 2023 – Present</h4>
+        <p>Master of Science in Computer Science</p>
+        <h4>Vasavi College of Engineering | Aug. 2019 – May 2023</h4>
+        <p>Bachelor of Engineering in Information Technology | CGPA - 8.50</p>
+    </div>
+</section>
+
+    <section id="experience"  >
+        <br><br>
+        <div>
+        <h2>Experience</h2>
+        <hr>
+        <h4>NSL Hub | Feb 2023 – Jun 2023</h4>
+        <p>Project Intern | Hyderabad, India</p>
+        <ul>
+            <li>Built comprehensive reports by analyzing organizational data, providing valuable insights into activities and trends.</li>
+            <li>Developed an interactive chatbot using organization tools, enhancing user engagement and providing efficient solutions to
+                common queries.</li>
+            <li>Constructed SQL queries to extract and manipulate data for the purpose of generating visual reports.</li>
+            <li>Translated complex data sets into meaningful visualizations, aiding stakeholders in understanding key performance
+                indicators and patterns.</li>
+        </ul>
+    </div>
+    </section>
+
+    <section id="research"  >
+        <br><br>
+        <div>
+        <h2>Research</h2>
+        <hr>
+        <h4>Plant Disease detection using CNN | Feb 2023 – Jun 2023</h4>
+        <ul>
+            <li>Created and implemented an innovative application leveraging Convolutional Neural Networks (CNN) to accurately
+                identify plant diseases from leaf images.</li>
+            <li>Developed a robust CNN model capable of detecting diverse plant diseases by analyzing leaf images captured from
+                varying angles.</li>
+            <li>Demonstrated expertise in image processing, machine learning, and computer vision to design an efficient solution for
+                early plant disease detection.</li>
+            <li>Authored a research paper that was presented and published in the 8th IEEE International Conference on Engineering
+                Technologies and Applied Sciences (ICETAS 2023).</li>
+        </ul>
+    </div>
+    </section>
+
+    <section id="projects"  >
+        <br>
+        <br>
+       <div style="height: fit-content;">
+        <h2>Projects</h2>
+        <hr>
+
+        <h4>MediGuide | Python, Streamlit | Jan 2022</h4>
+        <ul>
+            <li>Developed a user-friendly web application designed to efficiently locate nearby hospitals and healthcare centers,
+                enhancing access to medical services.</li>
+            <li>Implemented a disease detection feature utilizing symptom analysis, enabling users to gain insights into potential health
+                issues from the comfort of their homes.</li>
+            <li>Engineered a comprehensive solution that generates medical prescriptions automatically in the event of disease detection,
+                streamlining the healthcare process and improving patient experience</li>
+            <li>Leveraged cutting-edge technologies to ensure seamless functionality, user privacy, and accurate information
+                dissemination for a holistic healthcare application.</li>
+        </ul>
+
+        <h4>Travel Website | JavaScript, HTML, CSS | Nov 2021</h4>
+        <ul>
+            <li>Developed a user-friendly web application aimed at enhancing tourist experiences in Uttarakhand state.</li>
+            <li>Implemented an intuitive interface for browsing diverse tour packages and accessing historical information about tourist
+                destinations.</li>
+            <li>Leveraged modern web technologies to create an engaging platform that promotes Uttarakhand’s tourism offerings and
+                heritage.</li>
+        </ul>
+
+        <h4>Hungry Snake Game | Python | Aug 2021</h4>
+        <ul>
+            <li>Created an engaging Python-based game featuring a dynamic snake character tasked with consuming strategically placed
+                food items on a dynamic grid.</li>
+            <li>Integrated an interactive quiz feature, offering customers an engaging way to earn discounts on their purchases.</li>
+        </ul>
+
+        <h4>Tic Tac Toe | C | Sep 2019</h4>
+        <ul>
+            <li>Created a 2-player game with a 3x3 grid, allowing players to insert their symbols.</li>
+            <li>Implemented winning conditions for horizontal, vertical, and diagonal symbol placements.</li>
+        </ul>
+    </div>
+    </section>
+</body>
+</html>
