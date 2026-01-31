@@ -1,30 +1,12 @@
-import HeroCanvas from "@/components/HeroCanvas";
 import SectionCanvas from "@/components/SectionCanvas";
+import PhotoParallax from "@/components/PhotoParallax";
+import ContactForm from "@/components/ContactForm";
 
 export default function Home() {
   return (
     <div className="page">
-      <div className="noise" />
-      <div className="grid" />
-      <div className="orb orb-a" />
-      <div className="orb orb-b" />
-
-      <header className="nav">
-        <div className="brand">GK<span>R</span></div>
-        <nav>
-          <a href="#work">Work</a>
-          <a href="#projects">Projects</a>
-          <a href="#skills">Skills</a>
-          <a href="#education">Education</a>
-          <a href="#contact">Contact</a>
-        </nav>
-        <a className="cta" href="mailto:gayathrireddykalthireddy@gmail.com">
-          Let’s build
-        </a>
-      </header>
-
-      <main>
-        <section className="hero" id="top">
+      <main className="snap-container">
+        <section className="hero snap-panel" id="top">
           <div className="hero-left">
             <p className="eyebrow">Software & ML Engineer</p>
             <h1>
@@ -55,7 +37,7 @@ export default function Home() {
             </div>
             <div className="hero-metrics">
               <div>
-                <span>4+</span>
+                <span>2+</span>
                 <p>Years building software + ML systems</p>
               </div>
               <div>
@@ -69,6 +51,7 @@ export default function Home() {
             </div>
           </div>
           <div className="hero-right">
+            <PhotoParallax />
             <div className="signal-card">
               <h3>Signal Stack</h3>
               <ul>
@@ -78,12 +61,6 @@ export default function Home() {
                 <li><strong>Data:</strong> PostgreSQL, MongoDB, PySpark</li>
                 <li><strong>AI:</strong> GPT-4o, LangChain, OpenAI APIs</li>
               </ul>
-            </div>
-            <div className="canvas-card">
-              <HeroCanvas />
-              <div className="canvas-overlay">
-                <p>Lightweight 3D signal field</p>
-              </div>
             </div>
             <div className="status-card">
               <p>Based in Washington, DC</p>
@@ -97,7 +74,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="section" id="work">
+        <section className="section snap-panel" id="work">
           <div className="section-title">
             <div>
               <h2>Experience</h2>
@@ -162,7 +139,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="section" id="projects">
+        <section className="section snap-panel" id="projects">
           <div className="section-title">
             <div>
               <h2>Projects</h2>
@@ -172,6 +149,18 @@ export default function Home() {
           </div>
           <div className="project-grid">
             <article className="project">
+              <div className="project-hud">
+                <div className="hud-dots">
+                  <span />
+                  <span />
+                  <span />
+                </div>
+                <span className="hud-tag">Model Lab</span>
+              </div>
+              <div className="project-media">
+                <img src="/Insightad.png" alt="InsightAd project visual" />
+                <span className="media-tag">Ranking AI</span>
+              </div>
               <div className="project-head">
                 <h3>InsightAd</h3>
                 <span>Python · PyTorch · LLMs</span>
@@ -185,8 +174,29 @@ export default function Home() {
                 <span>Explainability</span>
                 <span>Vector Search</span>
               </div>
+              <a
+                className="project-link"
+                href="https://github.com/gayathri0124/InsightAd"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span aria-hidden="true" className="icon-github" />
+                View on GitHub
+              </a>
             </article>
             <article className="project">
+              <div className="project-hud">
+                <div className="hud-dots">
+                  <span />
+                  <span />
+                  <span />
+                </div>
+                <span className="hud-tag">Med Stream</span>
+              </div>
+              <div className="project-media">
+                <img src="/mediguide.jpeg" alt="Mediguide project visual" />
+                <span className="media-tag">Health ML</span>
+              </div>
               <div className="project-head">
                 <h3>Mediguide</h3>
                 <span>Scikit-learn · Streamlit</span>
@@ -200,8 +210,29 @@ export default function Home() {
                 <span>Similarity</span>
                 <span>Decision Support</span>
               </div>
+              <a
+                className="project-link"
+                href="https://github.com/gayathri0124/MediGuide_"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span aria-hidden="true" className="icon-github" />
+                View on GitHub
+              </a>
             </article>
             <article className="project">
+              <div className="project-hud">
+                <div className="hud-dots">
+                  <span />
+                  <span />
+                  <span />
+                </div>
+                <span className="hud-tag">Ops Grid</span>
+              </div>
+              <div className="project-media">
+                <img src="/smartlogistics.webp" alt="Smart Logistics project visual" />
+                <span className="media-tag">Logistics</span>
+              </div>
               <div className="project-head">
                 <h3>Smart Logistics Platform</h3>
                 <span>OpenAI GPT-4o · Plotly</span>
@@ -215,11 +246,20 @@ export default function Home() {
                 <span>Forecasting</span>
                 <span>Analytics</span>
               </div>
+              <a
+                className="project-link"
+                href="https://github.com/gayathri0124/smartlogistics"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span aria-hidden="true" className="icon-github" />
+                View on GitHub
+              </a>
             </article>
           </div>
         </section>
 
-        <section className="section" id="skills">
+        <section className="section snap-panel" id="skills">
           <div className="section-title">
             <div>
               <h2>Technical Stack</h2>
@@ -230,24 +270,65 @@ export default function Home() {
           <div className="skill-grid">
             <div className="skill-card">
               <h4>Languages & Tools</h4>
-              <p>Python, JavaScript, TypeScript, Java, C++, SQL, Bash, Git, Postman, Linux CLI</p>
+              <div className="skill-cloud">
+                <span>Python</span>
+                <span>JavaScript</span>
+                <span>TypeScript</span>
+                <span>Java</span>
+                <span>C++</span>
+                <span>SQL</span>
+                <span>Bash</span>
+                <span>Git</span>
+                <span>Postman</span>
+                <span>Linux CLI</span>
+              </div>
             </div>
             <div className="skill-card">
               <h4>Frameworks & Libraries</h4>
-              <p>React, Next.js, Vue.js, Node.js, Flask, FastAPI, GraphQL, PyTorch, TensorFlow, Scikit-learn</p>
+              <div className="skill-cloud">
+                <span>React</span>
+                <span>Next.js</span>
+                <span>Vue.js</span>
+                <span>Node.js</span>
+                <span>Flask</span>
+                <span>FastAPI</span>
+                <span>GraphQL</span>
+                <span>PyTorch</span>
+                <span>TensorFlow</span>
+                <span>Scikit-learn</span>
+              </div>
             </div>
             <div className="skill-card">
               <h4>Data & Analytics</h4>
-              <p>Pandas, NumPy, PySpark, OpenCV, Plotly, Folium, PostgreSQL, MongoDB, Tableau, Power BI</p>
+              <div className="skill-cloud">
+                <span>Pandas</span>
+                <span>NumPy</span>
+                <span>PySpark</span>
+                <span>OpenCV</span>
+                <span>Plotly</span>
+                <span>Folium</span>
+                <span>PostgreSQL</span>
+                <span>MongoDB</span>
+                <span>Tableau</span>
+                <span>Power BI</span>
+              </div>
             </div>
             <div className="skill-card">
               <h4>Platforms</h4>
-              <p>AWS, Azure, Oracle Cloud, Docker, Kubernetes, Vercel, GitHub Actions</p>
+              <div className="skill-cloud">
+                <span>AWS</span>
+                <span>Azure</span>
+                <span>Oracle Cloud</span>
+                <span>Docker</span>
+                <span>Kubernetes</span>
+                <span>Vercel</span>
+                <span>GitHub Actions</span>
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="section" id="education">
+        <section className="section snap-panel" id="education">
           <div className="section-title">
             <div>
               <h2>Education</h2>
@@ -269,44 +350,36 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="section" id="contact">
+        <section className="section snap-panel" id="contact">
           <div className="section-title">
             <div>
               <h2>Let’s Collaborate</h2>
               <p>Reach out for ML engineering, full-stack systems, or applied AI strategy.</p>
             </div>
-            <SectionCanvas variant="a" />
           </div>
           <div className="contact-card">
             <div>
-              <h3>Contact</h3>
-              <p>Washington, DC</p>
-              <a href="mailto:gayathrireddykalthireddy@gmail.com">
-                gayathrireddykalthireddy@gmail.com
-              </a>
+              <h3 className="contact-subheading">Contact</h3>
+              <p>Let’s build something smart together.</p>
+              <div className="contact-visual" aria-hidden="true">
+                <div className="chat-bubbles">
+                  <span className="bubble bubble-left">
+                    <span className="bubble-lines" />
+                  </span>
+                  <span className="bubble bubble-right">
+                    <span className="bubble-lines" />
+                  </span>
+                  <span className="bubble bubble-small">
+                    <span className="bubble-lines" />
+                  </span>
+                </div>
+              </div>
             </div>
-            <div>
-              <h3>Links</h3>
-              <a href="https://github.com/gayathri0124" target="_blank" rel="noreferrer">
-                GitHub
-              </a>
-              <a href="https://www.linkedin.com/in/gayathrireddyk/" target="_blank" rel="noreferrer">
-                LinkedIn
-              </a>
-            </div>
-            <div>
-              <h3>Achievements</h3>
-              <p>Top 10 Finalist · NTT AI Data Hackathon 2022</p>
-              <p>IIIT Hyderabad Research Internship · Selected from 300+ applicants</p>
-              <p>Tech Lead · TechSavishkar (500+ participants)</p>
-            </div>
+            <ContactForm />
           </div>
+          <p className="footer-note">Designed & built by Gayathri Kalthi Reddy · 2026</p>
         </section>
       </main>
-
-      <footer className="footer">
-        <p>Designed & built by Gayathri Kalthi Reddy · 2026</p>
-      </footer>
     </div>
   );
 }
