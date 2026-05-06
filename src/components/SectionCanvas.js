@@ -43,7 +43,7 @@ export default function SectionCanvas({ variant = "a" }) {
 
     const geometry = new THREE.TorusKnotGeometry(1.1, 0.22, 80, 10);
     const material = new THREE.MeshStandardMaterial({
-      color: variant === "b" ? 0x4ce0c5 : 0xff5c7a,
+      color: variant === "b" ? 0x00e5b0 : 0x6366f1,
       wireframe: true,
       transparent: true,
       opacity: 0.4,
@@ -64,7 +64,7 @@ export default function SectionCanvas({ variant = "a" }) {
       new THREE.BufferAttribute(positions, 3)
     );
     const particleMaterial = new THREE.PointsMaterial({
-      color: 0xffffff,
+      color: variant === "b" ? 0x6366f1 : 0x00e5b0,
       size: 0.02,
       transparent: true,
       opacity: 0.35,

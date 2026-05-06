@@ -1,385 +1,402 @@
-import SectionCanvas from "@/components/SectionCanvas";
-import PhotoParallax from "@/components/PhotoParallax";
-import ContactForm from "@/components/ContactForm";
+"use client";
+import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 
 export default function Home() {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+ 
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+      
+      const cards = document.querySelectorAll(".glass-card, .proj-card, .contact-card");
+      cards.forEach((card) => {
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty("--mouse-x", `${e.clientX - rect.left}px`);
+        card.style.setProperty("--mouse-y", `${e.clientY - rect.top}px`);
+      });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    window.location.href = `mailto:gayathrireddykalthireddy@gmail.com?subject=Contact&body=${encodeURIComponent(formData.get("message"))}`;
+  };
+
+  const experiences = [
+    {
+      role: "Full Stack Developer",
+      company: "Swipe Savvy",
+      date: "Aug 2025 – Jan 2026",
+      points: [
+        "Built AI marketing engine cutting API latency by 38%.",
+        "Delivered real-time analytics with Next.js & NestJS.",
+        "Shipped GPT-4 powered agents for PCI/PII safety.",
+      ],
+    },
+    {
+      role: "Mobile Application Intern",
+      company: "Medfilo Inc",
+      date: "Jun 2025 – Aug 2025",
+      points: [
+        "Engineered Node.js microservices reducing latency by 20%.",
+        "Automated HIPAA-compliant PDF delivery with AWS S3.",
+      ],
+    },
+    {
+      role: "Technical Support Assistant",
+      company: "George Washington University",
+      date: "Aug 2024 – May 2025",
+      points: [
+        "Built IT platform with automated NLP classification.",
+        "Integrated Naive Bayes NLP models to cut misclassification.",
+        "Optimized PostgreSQL queries reducing latency by 28%.",
+      ],
+    },
+    {
+      role: "Software Developer",
+      company: "NSL Hub",
+      date: "Jul 2022 – Jul 2023",
+      points: [
+        "Architected a distributed academic data platform, improving report throughput by 55%.",
+        "Optimized REST APIs to cut response times from 1.8s to 420ms.",
+        "Built ML pipelines using Random Forest and BERT (R² 0.89).",
+      ],
+    },
+    {
+      role: "Research Intern – ML",
+      company: "Vasavi Lab",
+      date: "Jun 2022 – Jan 2023",
+      points: [
+        "Fine-tuned ResNet-34 on 54K+ images, delivering 93% test accuracy.",
+        "Reduced false positives from 12% to 6% via data augmentation.",
+      ],
+    },
+  ];
+
+  const education = [
+    {
+      degree: "MS in Computer Science",
+      school: "George Washington University",
+      date: "May 2025",
+      desc: "Focus on Cloud Computing, Big Data, and Machine Learning. CGPA: 3.71/4.0",
+    },
+    {
+      degree: "BE in Information Technology",
+      school: "Vasavi College of Engineering",
+      date: "May 2023",
+      desc: "Core focus on Algorithms, Neural Networks, and Web Development. CGPA: 8.52/10",
+    },
+  ];
+
+  const projects = [
+    {
+      title: "InsightAd",
+      category: "Ranking AI",
+      tech: ["Python", "PyTorch", "LLMs"],
+      desc: "Two-stage ad ranking system blending CTR prediction with LLM explanations.",
+      image: "/Insightad.png",
+      github: "https://github.com/gayathri0124/InsightAd",
+    },
+    {
+      title: "Mediguide",
+      category: "Health ML",
+      tech: ["Scikit-learn", "NLP"],
+      desc: "AI health assistant predicting diseases from symptoms with hospital search.",
+      image: "/mediguide_new.jpeg",
+      github: "https://github.com/gayathri0124/MediGuide_",
+    },
+    {
+      title: "Smart Logistics",
+      category: "Logistics AI",
+      tech: ["GPT-4o", "ML"],
+      desc: "ML-based delay prediction and route optimization dashboard.",
+      image: "/smartlogistics.webp",
+      github: "https://github.com/gayathri0124/smartlogistics",
+    },
+  ];
+
+  const skills = [
+    { name: "Python", color: "#3776ab" },
+    { name: "TypeScript", color: "#3178c6" },
+    { name: "Next.js", color: "#6366f1" },
+    { name: "React", color: "#61dafb" },
+    { name: "PyTorch", color: "#ee4c2c" },
+    { name: "AWS", color: "#ff9900" },
+    { name: "Docker", color: "#2496ed" },
+    { name: "Node.js", color: "#339933" },
+  ];
+
+  
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
+  };
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.2 } }
+  };
+
   return (
-    <div className="page">
-      <main className="snap-container">
-        <section className="hero snap-panel" id="top">
-          <div className="hero-left">
-            <p className="eyebrow">Software & ML Engineer</p>
-            <h1>
-              Gayathri
-              <span>Kalthi Reddy</span>
-            </h1>
-            <p className="lede">
-              I design intelligent, production-ready systems that combine clean
-              engineering with applied machine learning. From real-time
-              analytics to AI safety layers, I build products that scale with
-              clarity.
-            </p>
-            <div className="hero-actions">
-              <a className="button primary" href="#projects">
-                Explore work
-              </a>
-              <a className="button ghost" href="#contact">
-                Contact me
-              </a>
-              <a
-                className="button ghost"
-                href="/Gayathri_K.pdf"
-                target="_blank"
-                rel="noreferrer"
-              >
-                View resume
-              </a>
-            </div>
-            <div className="hero-metrics">
-              <div>
-                <span>2+</span>
-                <p>Years building software + ML systems</p>
-              </div>
-              <div>
-                <span>10K+</span>
-                <p>Campaign logs analyzed in real time</p>
-              </div>
-              <div>
-                <span>93%</span>
-                <p>Plant disease detection accuracy</p>
-              </div>
-            </div>
-          </div>
-          <div className="hero-right">
-            <PhotoParallax />
-            <div className="signal-card">
-              <h3>Signal Stack</h3>
-              <ul>
-                <li><strong>Cloud:</strong> AWS, Azure, Oracle</li>
-                <li><strong>ML:</strong> PyTorch, TensorFlow, Scikit-learn</li>
-                <li><strong>Web:</strong> React, Next.js, GraphQL</li>
-                <li><strong>Data:</strong> PostgreSQL, MongoDB, PySpark</li>
-                <li><strong>AI:</strong> GPT-4o, LangChain, OpenAI APIs</li>
-              </ul>
-            </div>
-            <div className="status-card">
-              <p>Based in Washington, DC</p>
-              <p>Open to full-time roles</p>
-              <div className="pulse">
-                <span />
-                <span />
-                <span />
-              </div>
-            </div>
-          </div>
-        </section>
+    <main className="portfolio-wrapper">
+      {/* ── Hero Section ── */}
+      <section className="hero-container" id="top">
+        <motion.div 
+          className="hero-content"
+          initial="hidden"
+          animate="visible"
+          variants={staggerContainer}
+        >
+          <motion.div variants={fadeInUp} className="hero-badge">WELCOME TO MY UNIVERSE</motion.div>
+          <motion.h1 variants={fadeInUp} className="hero-title">
+            Crafting <span className="text-accent">Digital</span><br />
+            Masterpieces
+          </motion.h1>
+          <motion.p variants={fadeInUp} className="hero-desc">
+            I&apos;m <strong>Gayathri Kalthi Reddy</strong>, a professional <span>Software &amp; ML Engineer</span> dedicated to building high-performance systems.
+          </motion.p>
+          <motion.div variants={fadeInUp} className="hero-btns">
+            <a href="#contact" className="btn-accent">LET&apos;S COLLABORATE</a>
+            <a href="/Gayathri_K.pdf" target="_blank" className="btn-accent ghost">GET RESUME</a>
+          </motion.div>
+        </motion.div>
 
-        <section className="section snap-panel" id="work">
-          <div className="section-title">
-            <div>
-              <h2>Experience</h2>
-              <p>Software engineering + ML impact across product, research, and analytics.</p>
+        <motion.div 
+          className="hero-visual"
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1, delay: 0.2 }}
+        >
+          <motion.div 
+            className="code-card"
+            whileHover={{ rotateX: 5, rotateY: -5, scale: 1.02 }}
+            style={{ perspective: 1000 }}
+          >
+            <div className="code-header">
+              <div className="window-dots"><span></span><span></span><span></span></div>
+              <span className="file-name">Portfolio.ts</span>
             </div>
-            <SectionCanvas variant="a" />
-          </div>
-          <div className="timeline">
-            <article>
-              <div className="role">
-                <h3>Full Stack Developer · Swipe Savvy</h3>
-                <span>Aug 2025 – Jan 2026</span>
-              </div>
-              <ul>
-                <li>Built an AI-powered marketing orchestration engine for 1,000+ simulated merchants, cutting API latency by 38%.</li>
-                <li>Delivered real-time analytics across 10K+ campaign logs with Next.js, NestJS, and GraphQL caching.</li>
-                <li>Shipped GPT-4 powered Analytics + Checker agents to produce insights and enforce PCI/PII-safe outputs.</li>
-              </ul>
-            </article>
-            <article>
-              <div className="role">
-                <h3>Mobile Application Intern · Medfilo Inc</h3>
-                <span>Jun 2025 – Aug 2025</span>
-              </div>
-              <ul>
-                <li>Engineered Node.js microservices and REST workflows, reducing response latency by 20%.</li>
-                <li>Automated HIPAA-compliant PDF delivery using PDFKit, AWS S3, and signed URLs.</li>
-              </ul>
-            </article>
-            <article>
-              <div className="role">
-                <h3>Technical Support Assistant · GWU</h3>
-                <span>Aug 2024 – May 2025</span>
-              </div>
-              <ul>
-                <li>Built an internal IT ticketing platform with automated classification workflows.</li>
-                <li>Integrated Naive Bayes NLP models to cut misclassification by 30%.</li>
-                <li>Redesigned PostgreSQL query logic to reduce latency by 28%.</li>
-              </ul>
-            </article>
-            <article>
-              <div className="role">
-                <h3>Software Developer · NSL Hub</h3>
-                <span>Jul 2022 – Jul 2023</span>
-              </div>
-              <ul>
-                <li>Architected a distributed academic data platform, improving report throughput by 55%.</li>
-                <li>Optimized REST APIs to cut response times from 1.8s to 420ms.</li>
-                <li>Built ML pipelines using Random Forest and BERT, achieving R² 0.89 and F1 0.84.</li>
-              </ul>
-            </article>
-            <article>
-              <div className="role">
-                <h3>Research Intern – ML · Vasavi Lab</h3>
-                <span>Jun 2022 – Jan 2023</span>
-              </div>
-              <ul>
-                <li>Fine-tuned ResNet-34 on 54K+ images, delivering 93% test accuracy.</li>
-                <li>Designed preprocessing and augmentation to reduce false positives from 12% to 6%.</li>
-              </ul>
-            </article>
-          </div>
-        </section>
+            <div className="code-content">
+              <p><span className="k">const</span> <span className="v">developer</span> = &#123;</p>
+              <p>&nbsp;&nbsp;name: <span className="s">&apos;Gayathri Kalthi Reddy&apos;</span>,</p>
+              <p>&nbsp;&nbsp;focus: <span className="s">&apos;Software &amp; ML Engineering&apos;</span>,</p>
+              <p>&nbsp;&nbsp;passionate: <span className="k">true</span>,</p>
+              <p>&nbsp;&nbsp;motto: <span className="s">&apos;Build with Purpose&apos;</span></p>
+              <p>&#125;;</p>
+              <br />
+              <p><span className="v">developer</span>.showcase();</p>
+            </div>
+          </motion.div>
+        </motion.div>
+      </section>
 
-        <section className="section snap-panel" id="projects">
-          <div className="section-title">
-            <div>
-              <h2>Projects</h2>
-              <p>Applied ML systems built for explainability, performance, and decision support.</p>
-            </div>
-            <SectionCanvas variant="b" />
-          </div>
-          <div className="project-grid">
-            <article className="project">
-              <div className="project-hud">
-                <div className="hud-dots">
-                  <span />
-                  <span />
-                  <span />
-                </div>
-                <span className="hud-tag">Model Lab</span>
+      {/* ── Experience Section ── */}
+      <section className="section-wrapper" id="work">
+        <motion.div 
+          className="section-head"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={fadeInUp}
+        >
+          <h2 className="text-accent">Experience</h2>
+        </motion.div>
+        <div className="timeline-wrap">
+          <div className="timeline-line"></div>
+          {experiences.map((exp, idx) => (
+            <motion.div 
+              key={idx} 
+              className="timeline-node"
+              initial={{ opacity: 0, x: idx % 2 === 0 ? -50 : 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.6 }}
+            >
+              <div className="timeline-dot">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-accent"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
               </div>
-              <div className="project-media">
-                <img src="/Insightad.png" alt="InsightAd project visual" />
-                <span className="media-tag">Ranking AI</span>
-              </div>
-              <div className="project-head">
-                <h3>InsightAd</h3>
-                <span>Python · PyTorch · LLMs</span>
-              </div>
-              <p>
-                Two-stage ad ranking system blending probabilistic CTR prediction with LLM-powered explanations
-                and custom vector scoring.
-              </p>
-              <div className="pill-row">
-                <span>Ranking</span>
-                <span>Explainability</span>
-                <span>Vector Search</span>
-              </div>
-              <a
-                className="project-link"
-                href="https://github.com/gayathri0124/InsightAd"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <span aria-hidden="true" className="icon-github" />
-                View on GitHub
-              </a>
-            </article>
-            <article className="project">
-              <div className="project-hud">
-                <div className="hud-dots">
-                  <span />
-                  <span />
-                  <span />
-                </div>
-                <span className="hud-tag">Med Stream</span>
-              </div>
-              <div className="project-media">
-                <img src="/mediguide.jpeg" alt="Mediguide project visual" />
-                <span className="media-tag">Health ML</span>
-              </div>
-              <div className="project-head">
-                <h3>Mediguide</h3>
-                <span>Scikit-learn · Streamlit</span>
-              </div>
-              <p>
-                AI health assistant that predicts diseases from 130+ symptoms and recommends treatments with
-                geolocation-aware hospital search.
-              </p>
-              <div className="pill-row">
-                <span>Healthcare</span>
-                <span>Similarity</span>
-                <span>Decision Support</span>
-              </div>
-              <a
-                className="project-link"
-                href="https://github.com/gayathri0124/MediGuide_"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <span aria-hidden="true" className="icon-github" />
-                View on GitHub
-              </a>
-            </article>
-            <article className="project">
-              <div className="project-hud">
-                <div className="hud-dots">
-                  <span />
-                  <span />
-                  <span />
-                </div>
-                <span className="hud-tag">Ops Grid</span>
-              </div>
-              <div className="project-media">
-                <img src="/smartlogistics.webp" alt="Smart Logistics project visual" />
-                <span className="media-tag">Logistics</span>
-              </div>
-              <div className="project-head">
-                <h3>Smart Logistics Platform</h3>
-                <span>OpenAI GPT-4o · Plotly</span>
-              </div>
-              <p>
-                Full-stack dashboard for ML-based delay prediction, route optimization, and AI-generated
-                shipment recommendations.
-              </p>
-              <div className="pill-row">
-                <span>Optimization</span>
-                <span>Forecasting</span>
-                <span>Analytics</span>
-              </div>
-              <a
-                className="project-link"
-                href="https://github.com/gayathri0124/smartlogistics"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <span aria-hidden="true" className="icon-github" />
-                View on GitHub
-              </a>
-            </article>
-          </div>
-        </section>
-
-        <section className="section snap-panel" id="skills">
-          <div className="section-title">
-            <div>
-              <h2>Technical Stack</h2>
-              <p>Languages, frameworks, and platforms used to ship end-to-end systems.</p>
-            </div>
-            <SectionCanvas variant="a" />
-          </div>
-          <div className="skill-grid">
-            <div className="skill-card">
-              <h4>Languages & Tools</h4>
-              <div className="skill-cloud">
-                <span>Python</span>
-                <span>JavaScript</span>
-                <span>TypeScript</span>
-                <span>Java</span>
-                <span>C++</span>
-                <span>SQL</span>
-                <span>Bash</span>
-                <span>Git</span>
-                <span>Postman</span>
-                <span>Linux CLI</span>
-              </div>
-            </div>
-            <div className="skill-card">
-              <h4>Frameworks & Libraries</h4>
-              <div className="skill-cloud">
-                <span>React</span>
-                <span>Next.js</span>
-                <span>Vue.js</span>
-                <span>Node.js</span>
-                <span>Flask</span>
-                <span>FastAPI</span>
-                <span>GraphQL</span>
-                <span>PyTorch</span>
-                <span>TensorFlow</span>
-                <span>Scikit-learn</span>
-              </div>
-            </div>
-            <div className="skill-card">
-              <h4>Data & Analytics</h4>
-              <div className="skill-cloud">
-                <span>Pandas</span>
-                <span>NumPy</span>
-                <span>PySpark</span>
-                <span>OpenCV</span>
-                <span>Plotly</span>
-                <span>Folium</span>
-                <span>PostgreSQL</span>
-                <span>MongoDB</span>
-                <span>Tableau</span>
-                <span>Power BI</span>
-              </div>
-            </div>
-            <div className="skill-card">
-              <h4>Platforms</h4>
-              <div className="skill-cloud">
-                <span>AWS</span>
-                <span>Azure</span>
-                <span>Oracle Cloud</span>
-                <span>Docker</span>
-                <span>Kubernetes</span>
-                <span>Vercel</span>
-                <span>GitHub Actions</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="section snap-panel" id="education">
-          <div className="section-title">
-            <div>
-              <h2>Education</h2>
-              <p>Deep focus on cloud, ML, and scalable systems.</p>
-            </div>
-            <SectionCanvas variant="b" />
-          </div>
-          <div className="edu-grid">
-            <article>
-              <h3>George Washington University</h3>
-              <p>MS in Computer Science · CGPA 3.71/4.0 · May 2025</p>
-              <span>Coursework: Cloud Computing, Big Data, Data Mining, Machine Learning, Database Systems, Algorithms, Computer Vision.</span>
-            </article>
-            <article>
-              <h3>Vasavi College of Engineering</h3>
-              <p>BE in Information Technology · CGPA 8.52/10 · May 2023</p>
-              <span>Coursework: Data Structures, OOP, Distributed Systems, OS, Neural Networks, AI, Web Dev, Networks.</span>
-            </article>
-          </div>
-        </section>
-
-        <section className="section snap-panel" id="contact">
-          <div className="section-title">
-            <div>
-              <h2>Let’s Collaborate</h2>
-              <p>Reach out for ML engineering, full-stack systems, or applied AI strategy.</p>
-            </div>
-          </div>
-          <div className="contact-card">
-            <div>
-              <h3 className="contact-subheading">Contact</h3>
-              <p>Let’s build something smart together.</p>
-              <div className="contact-visual" aria-hidden="true">
-                <div className="chat-bubbles">
-                  <span className="bubble bubble-left">
-                    <span className="bubble-lines" />
-                  </span>
-                  <span className="bubble bubble-right">
-                    <span className="bubble-lines" />
-                  </span>
-                  <span className="bubble bubble-small">
-                    <span className="bubble-lines" />
-                  </span>
+              <div className="timeline-card-wrap">
+                <div className="glass-card">
+                  <span className="exp-date">{exp.date}</span>
+                  <h3 className="exp-role">{exp.role}</h3>
+                  <h4 className="exp-company text-accent">{exp.company}</h4>
+                  <ul className="exp-list">
+                    {exp.points.map((p, i) => <li key={i}>{p}</li>)}
+                  </ul>
                 </div>
               </div>
-            </div>
-            <ContactForm />
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Projects Section ── */}
+      <section className="section-wrapper" id="projects">
+        <motion.div 
+          className="section-head"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeInUp}
+        >
+          <h2 className="text-accent">Projects</h2>
+        </motion.div>
+        <div className="proj-grid">
+          {projects.map((proj, idx) => (
+            <motion.div 
+              key={idx} 
+              className="proj-card"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
+              whileHover={{ y: -10 }}
+            >
+              <div className="proj-img">
+                <Image src={proj.image} alt={proj.title} width={500} height={300} />
+              </div>
+              <div className="proj-body">
+                <span className="proj-cat">{proj.category}</span>
+                <h3 className="proj-title">{proj.title}</h3>
+                <p className="proj-desc">{proj.desc}</p>
+                <div className="proj-tags">
+                  {proj.tech.map((t, i) => <span key={i} className="proj-tag">{t}</span>)}
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Tech Stack Marquee ── */}
+      <section className="section-wrapper" id="skills">
+        <motion.div 
+          className="section-head"
+          initial="hidden"
+          whileInView="visible"
+          variants={fadeInUp}
+        >
+          <h2 className="text-accent">Tech Stack</h2>
+        </motion.div>
+        <div className="marquee-container">
+          <div className="marquee-track">
+            {[...skills, ...skills, ...skills].map((skill, idx) => (
+              <motion.div 
+                key={idx} 
+                className="skill-item"
+                whileHover={{ scale: 1.1, y: -5 }}
+              >
+                <span className="skill-name" style={{ color: skill.color }}>{skill.name}</span>
+              </motion.div>
+            ))}
           </div>
-          <p className="footer-note">Designed & built by Gayathri Kalthi Reddy · 2026</p>
-        </section>
-      </main>
-    </div>
+        </div>
+      </section>
+
+      {/* ── Education Section ── */}
+      <section className="section-wrapper" id="education">
+        <motion.div 
+          className="section-head"
+          initial="hidden"
+          whileInView="visible"
+          variants={fadeInUp}
+        >
+          <h2 className="text-accent">Education</h2>
+        </motion.div>
+        <div className="proj-grid">
+          {education.map((edu, idx) => (
+            <motion.div 
+              key={idx} 
+              className="glass-card"
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
+            >
+              <span className="exp-date">{edu.date}</span>
+              <h3 className="exp-role">{edu.degree}</h3>
+              <h4 className="exp-company text-accent">{edu.school}</h4>
+              <p className="proj-desc" style={{ marginTop: '1rem' }}>{edu.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Let's Connect ── */}
+      <section className="section-wrapper" id="contact">
+        <motion.div 
+          className="section-head"
+          initial="hidden"
+          whileInView="visible"
+          variants={fadeInUp}
+        >
+          <h2 className="text-accent">Let&apos;s Connect</h2>
+        </motion.div>
+        <div className="connect-layout">
+          <motion.form 
+            className="contact-form glass-card"
+            onSubmit={handleSubmit}
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+          >
+            <div className="input-group">
+              <label>Full Name</label>
+              <input type="text" name="name" placeholder="John Doe" required />
+            </div>
+            <div className="input-group">
+              <label>Email Address</label>
+              <input type="email" name="email" placeholder="john@example.com" required />
+            </div>
+            <div className="input-group">
+              <label>Message</label>
+              <textarea name="message" rows="5" placeholder="Tell me about your project..." required></textarea>
+            </div>
+            <button type="submit" className="btn-accent">SEND MESSAGE</button>
+          </motion.form>
+
+          <motion.div 
+            className="connect-cards"
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+          >
+            {[
+              { label: 'LinkedIn', val: 'gayathrireddyk', link: 'https://www.linkedin.com/in/gayathrireddyk/', icon: 'M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z' },
+              { label: 'Email', val: 'gayathrireddykalthireddy@gmail.com', icon: 'M2 4h20v16H2V4zm2 2v1.5l8 5 8-5V6H4zm0 12h16V9.5l-8 5-8-5V18z' },
+              { label: 'Location', val: 'Washington, DC', icon: 'M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z' }
+            ].map((c, i) => (
+              <a 
+                key={i} 
+                href={c.link || (c.label === 'Email' ? `mailto:${c.val}` : '#')} 
+                target={c.link ? "_blank" : undefined}
+                rel={c.link ? "noopener noreferrer" : undefined}
+                className="contact-card"
+                style={{ textDecoration: 'none' }}
+              >
+                <div className="c-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d={c.icon}/></svg>
+                </div>
+                <div className="c-info">
+                  <span className="c-label">{c.label}</span>
+                  <span className="c-val">{c.val}</span>
+                </div>
+              </a>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      <footer className="footer-v2">
+        <p>© 2026 Gayathri Kalthi Reddy. All rights reserved.</p>
+      </footer>
+    </main>
   );
 }

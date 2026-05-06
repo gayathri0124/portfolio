@@ -4,51 +4,65 @@ import { useEffect, useState } from "react";
 
 const STORAGE_KEY = "theme-preference";
 
+function SunIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="4" />
+      <line x1="12" y1="2" x2="12" y2="4" /><line x1="12" y1="20" x2="12" y2="22" />
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" /><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+      <line x1="2" y1="12" x2="4" y2="12" /><line x1="20" y1="12" x2="22" y2="12" />
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" /><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+    </svg>
+  );
+}
+
+function MoonIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+    </svg>
+  );
+}
+
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState("system");
-  const [resolved, setResolved] = useState("dark");
+  const [mounted, setMounted] = useState(false);
+  const [theme, setTheme] = useState("dark");
+
+  useEffect(() => {
+    setMounted(true); // eslint-disable-line react-hooks/set-state-in-effect
+  }, []);
 
   useEffect(() => {
     const stored = window.localStorage.getItem(STORAGE_KEY);
     if (stored) {
-      setTheme(stored);
-      applyTheme(stored);
-      return;
+      setTheme(stored); // eslint-disable-line react-hooks/set-state-in-effect
+      document.documentElement.setAttribute("data-theme", stored);
+    } else {
+      const isLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+      const initial = isLight ? "light" : "dark";
+      setTheme(initial);
+      document.documentElement.setAttribute("data-theme", initial);
     }
-    applyTheme("system");
-    const media = window.matchMedia("(prefers-color-scheme: light)");
-    setResolved(media.matches ? "light" : "dark");
-    const handler = (event) => setResolved(event.matches ? "light" : "dark");
-    media.addEventListener("change", handler);
-    return () => media.removeEventListener("change", handler);
   }, []);
 
-  useEffect(() => {
-    if (theme !== "system") {
-      setResolved(theme);
-    }
-  }, [theme]);
-
-  const applyTheme = (value) => {
-    const root = document.documentElement;
-    if (value === "system") {
-      root.removeAttribute("data-theme");
-      return;
-    }
-    root.setAttribute("data-theme", value);
-  };
-
   const toggleTheme = () => {
-    const current = theme === "system" ? resolved : theme;
-    const next = current === "dark" ? "light" : "dark";
+    const next = theme === "dark" ? "light" : "dark";
     setTheme(next);
     window.localStorage.setItem(STORAGE_KEY, next);
-    applyTheme(next);
+    document.documentElement.setAttribute("data-theme", next);
   };
 
+  if (!mounted) return <div className="theme-toggle" style={{ visibility: "hidden" }} />;
+
   return (
-    <button type="button" className="theme-toggle" onClick={toggleTheme}>
-      {resolved === "dark" && theme !== "light" ? "Light mode" : "Dark mode"}
+    <button
+      type="button"
+      className="theme-toggle"
+      onClick={toggleTheme}
+      aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+      title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+    >
+      {theme === "dark" ? <SunIcon /> : <MoonIcon />}
     </button>
   );
 }

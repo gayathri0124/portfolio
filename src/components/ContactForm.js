@@ -13,20 +13,45 @@ export default function ContactForm() {
   };
 
   return (
-    <form className="contact-form" onSubmit={handleSubmit}>
-      <label>
-        Name
-        <input type="text" name="name" placeholder="Your name" />
-      </label>
-      <label>
-        Email
-        <input type="email" name="email" placeholder="you@email.com" />
-      </label>
-      <label>
-        Message
-        <textarea name="message" rows="4" placeholder="Tell me about your project..." />
-      </label>
-      <button type="submit" className="button primary">Send message</button>
+    <form className="contact-form" onSubmit={handleSubmit} noValidate>
+      <div className="form-field">
+        <label htmlFor="cf-name" className="form-label">Name</label>
+        <input
+          id="cf-name"
+          type="text"
+          name="name"
+          className="form-input"
+          placeholder="Your name"
+          autoComplete="name"
+        />
+      </div>
+
+      <div className="form-field">
+        <label htmlFor="cf-email" className="form-label">Email</label>
+        <input
+          id="cf-email"
+          type="email"
+          name="email"
+          className="form-input"
+          placeholder="you@email.com"
+          autoComplete="email"
+        />
+      </div>
+
+      <div className="form-field">
+        <label htmlFor="cf-message" className="form-label">Message</label>
+        <textarea
+          id="cf-message"
+          name="message"
+          className="form-input form-textarea"
+          rows="5"
+          placeholder="Tell me about your project..."
+        />
+      </div>
+
+      <button type="submit" className="submit-btn">
+        Send Message →
+      </button>
     </form>
   );
 }

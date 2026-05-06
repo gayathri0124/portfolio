@@ -15,68 +15,84 @@ export default function HeroCanvas() {
       45,
       mount.clientWidth / mount.clientHeight,
       0.1,
-      100
+      1000
     );
-    camera.position.z = 6;
+    camera.position.z = 5;
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     renderer.setSize(mount.clientWidth, mount.clientHeight);
     mount.appendChild(renderer.domElement);
 
-    const geometry = new THREE.IcosahedronGeometry(1.8, 1);
-    const material = new THREE.MeshStandardMaterial({
-      color: 0xffb02e,
+    // Primary Dodecahedron - Glass
+    const glassGeometry = new THREE.DodecahedronGeometry(2, 0);
+    const glassMaterial = new THREE.MeshPhysicalMaterial({
+      color: 0xffffff,
+      metalness: 0.1,
+      roughness: 0.1,
+      transmission: 0.9,
+      thickness: 0.5,
+      transparent: true,
+      opacity: 0.2,
+      wireframe: false,
+    });
+    const glassMesh = new THREE.Mesh(glassGeometry, glassMaterial);
+    scene.add(glassMesh);
+
+    // Wireframe Overlay
+    const wireframeMaterial = new THREE.MeshBasicMaterial({
+      color: 0x00e5b0,
       wireframe: true,
       transparent: true,
-      opacity: 0.35,
+      opacity: 0.15,
     });
-    const mesh = new THREE.Mesh(geometry, material);
-    scene.add(mesh);
+    const wireframeMesh = new THREE.Mesh(glassGeometry, wireframeMaterial);
+    wireframeMesh.scale.set(1.001, 1.001, 1.001);
+    scene.add(wireframeMesh);
 
-    const particleCount = 200;
+    // Subtle Particle Background
+    const particleCount = 100;
     const positions = new Float32Array(particleCount * 3);
     for (let i = 0; i < particleCount * 3; i += 3) {
-      const radius = 3 + Math.random() * 0.8;
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(2 * Math.random() - 1);
-      positions[i] = radius * Math.sin(phi) * Math.cos(theta);
-      positions[i + 1] = radius * Math.sin(phi) * Math.sin(theta);
-      positions[i + 2] = radius * Math.cos(phi);
+      positions[i] = (Math.random() - 0.5) * 10;
+      positions[i+1] = (Math.random() - 0.5) * 10;
+      positions[i+2] = (Math.random() - 0.5) * 10;
     }
     const particleGeometry = new THREE.BufferGeometry();
-    particleGeometry.setAttribute(
-      "position",
-      new THREE.BufferAttribute(positions, 3)
-    );
+    particleGeometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
     const particleMaterial = new THREE.PointsMaterial({
-      color: 0x4ce0c5,
-      size: 0.03,
+      color: 0x6366f1,
+      size: 0.015,
       transparent: true,
-      opacity: 0.7,
+      opacity: 0.4,
     });
     const particles = new THREE.Points(particleGeometry, particleMaterial);
     scene.add(particles);
 
-    const light = new THREE.DirectionalLight(0xffffff, 0.9);
-    light.position.set(2, 3, 5);
-    scene.add(light);
-    scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+    // Lights
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(ambientLight);
+    const pointLight = new THREE.PointLight(0x00e5b0, 1);
+    pointLight.position.set(5, 5, 5);
+    scene.add(pointLight);
 
     let frame = 0;
     const animate = () => {
-      mesh.rotation.x += 0.002;
-      mesh.rotation.y += 0.003;
-      particles.rotation.y -= 0.0015;
+      glassMesh.rotation.y += 0.001;
+      glassMesh.rotation.x += 0.0005;
+      wireframeMesh.rotation.copy(glassMesh.rotation);
+      
+      particles.rotation.y += 0.0002;
+      
       renderer.render(scene, camera);
       frame = requestAnimationFrame(animate);
     };
 
     const onResize = () => {
-      const { clientWidth, clientHeight } = mount;
-      camera.aspect = clientWidth / clientHeight;
+      if (!mount) return;
+      camera.aspect = mount.clientWidth / mount.clientHeight;
       camera.updateProjectionMatrix();
-      renderer.setSize(clientWidth, clientHeight);
+      renderer.setSize(mount.clientWidth, mount.clientHeight);
     };
 
     window.addEventListener("resize", onResize);
@@ -85,8 +101,9 @@ export default function HeroCanvas() {
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener("resize", onResize);
-      geometry.dispose();
-      material.dispose();
+      glassGeometry.dispose();
+      glassMaterial.dispose();
+      wireframeMaterial.dispose();
       particleGeometry.dispose();
       particleMaterial.dispose();
       renderer.dispose();
